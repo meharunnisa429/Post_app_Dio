@@ -48,12 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
               hintStyle: const WidgetStatePropertyAll(
                   TextStyle(color: Colors.black38)),
               onChanged: (value) {
-                // if (_searchController.text.trim().isEmpty) {
-                //   log("on changed");
-                //   context
-                //       .read<PostBloc>()
-                //       .add(PostSearchItem(text: _searchController.text));
-                // }
+                if (_searchController.text.trim().isNotEmpty) {
+                  log("on changed");
+                  context
+                      .read<PostBloc>()
+                      .add(PostSearchItem(text: _searchController.text));
+                }
               },
               trailing: [
                 IconButton(
