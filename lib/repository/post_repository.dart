@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:post_app/models/post/post.dart';
@@ -24,7 +25,8 @@ class PostRepository {
 
   Future<Post> addPost({required String path, required Post post}) async {
     try {
-      final Response response = await ApiService.post(path, post.toJson());
+      final Response response =
+          await ApiService.post(path: path, jsonData: post.toJson());
       log(response.toString(), name: "add post response");
       if (response.statusCode == 200) {
         return Post.fromJson(response.data);
@@ -85,4 +87,6 @@ class PostRepository {
       throw "Wrong with request/code -search Post";
     }
   }
+
+  
 }

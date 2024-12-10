@@ -24,3 +24,4 @@ class PostSearchItem extends PostEvent {
   final String text;
   PostSearchItem({required this.text});
 }
+

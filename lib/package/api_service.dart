@@ -13,8 +13,8 @@ class ApiService {
         receiveTimeout: const Duration(seconds: 60),
         sendTimeout: const Duration(seconds: 60));
 
-  static Future<Response> get({
-     required String path, Map<String, dynamic>? queryParameters}) async {
+  static Future<Response> get(
+      {required String path, Map<String, dynamic>? queryParameters}) async {
     try {
       final Response response = await dio.get(path,
           queryParameters: queryParameters,
@@ -26,11 +26,13 @@ class ApiService {
   }
 
   static Future<Response> post(
-      String path, Map<String, dynamic> jsonData) async {
+      {required String path,
+      Map<String, dynamic>? jsonData,
+      FormData? formData}) async {
     log(path, name: "post request");
     try {
       final Response response = await dio.post(path,
-          data: jsonData,
+          data: formData ?? jsonData,
           options: Options(headers: {
             Headers.contentTypeHeader: 'application/json',
             "key": "oxdo"
@@ -41,6 +43,8 @@ class ApiService {
       throw Exception(e);
     }
   }
+
+  
 
   static Future<Response> put(
       String path, Map<String, dynamic> jsonData) async {

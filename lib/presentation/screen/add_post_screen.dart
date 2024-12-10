@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:post_app/models/post/post.dart';
 import 'package:post_app/presentation/bloc/post/post_bloc.dart';
 
@@ -18,6 +20,20 @@ class _AddPostScreenState extends State<AddPostScreen> {
   late TextEditingController _titleController;
   late TextEditingController _bodyController;
   late TextEditingController _userIdController;
+
+  final ImagePicker imgpicker = ImagePicker();
+  File? imageFile;
+
+  selectFile() async {
+    XFile? file = await ImagePicker().pickImage(
+        source: ImageSource.gallery, maxHeight: 1800, maxWidth: 1800);
+
+    if (file != null) {
+      setState(() {
+        imageFile = File(file.path);
+      });
+    }
+  }
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -106,6 +122,37 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     const SizedBox(
                       height: 32,
                     ),
+                    if (imageFile != null)
+                      Expanded(
+                        child: Image.file(
+                          File(imageFile!.path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    TextButton(
+                      onPressed: () async {
+                        await selectFile();
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            child: const Icon(
+                              Icons.image,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 4,
+                              left: 10,
+                            ),
+                            child: const Text('Add image'),
+                          ),
+                        ],
+                      ),
+                    ),
                     BlocConsumer<PostBloc, PostState>(
                       listener: (context, state) {
                         if (state is PostSuccess) {
@@ -138,6 +185,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                   userId: int.tryParse(userIdString) ?? 0,
                                 );
                                 if (widget.post == null) {
+                                  log(imageFile!.path.toString(),
+                                      name: "image file path");
                                   context
                                       .read<PostBloc>()
                                       .add(PostAddNewItem(post: post));
