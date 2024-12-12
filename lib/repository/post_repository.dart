@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:post_app/models/post/post.dart';
 import 'package:post_app/package/api_service.dart';
@@ -87,6 +85,4 @@ class PostRepository {
       throw "Wrong with request/code -search Post";
     }
   }
-
-  
 }

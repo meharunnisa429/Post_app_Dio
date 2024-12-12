@@ -28,20 +28,20 @@ class PostSuccess extends PostState {
   List<Object> get props =>
       [posts, isError, isLoading, message, searchResult, imagePath];
 
-  PostSuccess copyWith(
-      {List<Post>? posts,
-      bool? isError,
-      bool? isLoading,
-      String? message,
-      List<Post>? searchResult,
-      String? imagePath}) {
+  PostSuccess copyWith({
+    List<Post>? posts,
+    bool? isError,
+    bool? isLoading,
+    String? message,
+    List<Post>? searchResult,
+  }) {
     return PostSuccess(
-        posts: posts ?? this.posts,
-        isError: isError ?? this.isError,
-        isLoading: isLoading ?? this.isLoading,
-        message: message ?? this.message,
-        searchResult: searchResult ?? this.searchResult,
-        imagePath: imagePath ?? this.imagePath);
+      posts: posts ?? this.posts,
+      isError: isError ?? this.isError,
+      isLoading: isLoading ?? this.isLoading,
+      message: message ?? this.message,
+      searchResult: searchResult ?? this.searchResult,
+    );
   }
 }
 
